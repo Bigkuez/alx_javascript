@@ -7,14 +7,17 @@ const myObject = {
     }
   };
   
-  console.log(myObject);
+  function displayObject(obj) {
+    const { type, value, incr } = obj;
+    console.log({ type, value, incr });
+  }
   
+  displayObject(myObject);
   myObject.incr();
-  console.log(myObject);
+  displayObject(myObject);
+  myObject.incr();
+  displayObject(myObject);
+  myObject.incr();
+  displayObject(myObject);
   
-  myObject.incr();
-  console.log(myObject);
-  
-  myObject.incr();
-  console.log(myObject);
   
