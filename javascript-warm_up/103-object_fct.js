@@ -4,20 +4,14 @@ const myObject = {
     value: 12,
     incr: function () {
       this.value++;
-    }
+    },
   };
   
-  function displayObject(obj) {
-    const { type, value, incr } = obj;
-    console.log({ type, value, incr });
-  }
-  
-  displayObject(myObject);
+  console.log({ type: myObject.type, value: myObject.value });
   myObject.incr();
-  displayObject(myObject);
+  console.log({ type: myObject.type, value: myObject.value, incr: myObject.incr });
   myObject.incr();
-  displayObject(myObject);
+  console.log({ type: myObject.type, value: myObject.value, incr: myObject.incr });
   myObject.incr();
-  displayObject(myObject);
-  
+  console.log({ type: myObject.type, value: myObject.value, incr: myObject.incr });
   
