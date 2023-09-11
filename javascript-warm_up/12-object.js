@@ -1,11 +1,12 @@
-const languages = ["C is fun", "Python is cool", "JavaScript is amazing"];
-
-for (let i = 0; i < languages.length; i++) {
-  if (languages[i] === "Python is cool") {
-    languages[i] = "Python is awesome";
-  }
-}
-
-for (let i = 0; i < languages.length; i++) {
-  console.log(languages[i]);
-}
+#!/usr/bin/node
+const myObject = {
+    type: 'object',
+    value: 12
+  };
+  console.log(myObject);
+  
+  // Replace the value 12 with 89
+  myObject.value = 89;
+  
+  console.log(myObject);
+  
