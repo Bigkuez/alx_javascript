@@ -2,9 +2,9 @@
 const myFunctions = {};
 
 // Define the 'add' function
-myFunctions.add = function (a, b) {
-  return a + b;
-};
+function add(a, b) {
+    return a + b;
+  }
 
 // Export the object (if you are using Node.js or a module system)
 // module.exports = myFunctions;
