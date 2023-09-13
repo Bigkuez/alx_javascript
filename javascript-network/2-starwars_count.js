@@ -12,26 +12,42 @@ const characterId = 18;
 // Get the API URL from the command line arguments
 const apiUrl = process.argv[2];
 
-// Make a request to the Star Wars API
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  }
-
-  if (response.statusCode !== 200) {
-    console.error('API request failed with status code:', response.statusCode);
-    process.exit(1);
-  }
-
-  // Parse the JSON response
-  const data = JSON.parse(body);
-
-  // Filter movies where Wedge Antilles is present
-  const moviesWithWedgeAntilles = data.results.filter((movie) => {
-    return movie.characters.includes(characterId);
+// Function to fetch character data
+function fetchCharacterData(url) {
+  return new Promise((resolve, reject) => {
+    request(url, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(JSON.parse(body));
+      }
+    });
   });
+}
 
-  // Print the number of movies
-  console.log(moviesWithWedgeAntilles.length);
-});
+// Function to count movies where Wedge Antilles is present
+async function countMoviesWithWedgeAntilles(apiUrl, characterId) {
+  try {
+    const filmsResponse = await fetchCharacterData(apiUrl);
+    const films = filmsResponse.results;
+
+    let count = 0;
+
+    for (const film of films) {
+      const charactersInFilm = await Promise.all(
+        film.characters.map((characterUrl) => fetchCharacterData(characterUrl))
+      );
+
+      if (charactersInFilm.some((character) => character.id === characterId)) {
+        count++;
+      }
+    }
+
+    console.log(count);
+  } catch (err) {
+    console.error('Error:', err);
+    process.exit(1);
+  }
+}
+
+countMoviesWithWedgeAntilles(apiUrl, characterId);
