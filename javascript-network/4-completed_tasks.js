@@ -1,14 +1,14 @@
 const request = require('request');
 
-// Check if the API URL is provided as a command-line argument
-if (process.argv.length !== 3) {
-  console.error('Usage: node completed_tasks.js <API_URL>');
+const apiUrl = process.argv[2];
+
+if (!apiUrl) {
+  console.error('Usage: node 4-completed_tasks.js <API_URL>');
   process.exit(1);
 }
 
-const apiUrl = process.argv[2];
+const completedTasksByUser = {};
 
-// Make a GET request to the API URL
 request(apiUrl, (error, response, body) => {
   if (error) {
     console.error('Error:', error);
@@ -16,18 +16,15 @@ request(apiUrl, (error, response, body) => {
   }
 
   if (response.statusCode !== 200) {
-    console.error(`Error: Status Code ${response.statusCode}`);
+    console.error('Error: API request failed with status code', response.statusCode);
     process.exit(1);
   }
 
   try {
     const todos = JSON.parse(body);
 
-    // Initialize an object to store the count of completed tasks by user ID
-    const completedTasksByUser = {};
-
-    // Iterate through the todos and count completed tasks by user
-    todos.forEach((todo) => {
+    // Iterate through the todos and count completed tasks for each user.
+    for (const todo of todos) {
       if (todo.completed) {
         if (completedTasksByUser[todo.userId]) {
           completedTasksByUser[todo.userId]++;
@@ -35,10 +32,10 @@ request(apiUrl, (error, response, body) => {
           completedTasksByUser[todo.userId] = 1;
         }
       }
-    });
+    }
 
-    // Print the result in the format you specified
-    console.log(JSON.stringify(completedTasksByUser, null, 2));
+    // Print the results.
+    console.log(completedTasksByUser);
   } catch (parseError) {
     console.error('Error parsing JSON:', parseError);
     process.exit(1);
