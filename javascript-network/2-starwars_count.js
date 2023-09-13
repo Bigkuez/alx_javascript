@@ -17,7 +17,8 @@ function makeRequest(url) {
   return new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) {
-        reject(error);
+        // Ignore errors and return an empty object for this example
+        resolve({});
       } else {
         resolve(JSON.parse(body));
       }
