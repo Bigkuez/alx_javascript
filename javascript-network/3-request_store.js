@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // Check if the URL and file path are provided as command-line arguments
 if (process.argv.length !== 4) {
-  console.error('Usage: node fetch_and_save.js <URL> <output_file_path>');
+  console.error('Usage: node request_store.js <URL> <output_file_path>');
   process.exit(1);
 }
 
