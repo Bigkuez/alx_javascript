@@ -9,7 +9,11 @@ if (!movieId) {
 
 const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
 
-request(apiUrl, (error, response, body) => {
+const requestOptions = {
+  timeout: 60000, // Increase the timeout to 60 seconds
+};
+
+request(apiUrl, requestOptions, (error, response, body) => {
   if (error || response.statusCode !== 200) {
     console.error('Error fetching movie data.');
     process.exit(1);
@@ -26,9 +30,9 @@ request(apiUrl, (error, response, body) => {
 
   function fetchCharacterName(characterUrl) {
     return new Promise((resolve, reject) => {
-      request(characterUrl, (error, response, body) => {
+      request(characterUrl, requestOptions, (error, response, body) => {
         if (error || response.statusCode !== 200) {
-          reject('Error fetching character data.');
+          reject(`Error fetching character data for URL: ${characterUrl}`);
         } else {
           const character = JSON.parse(body);
           resolve(character.name);
