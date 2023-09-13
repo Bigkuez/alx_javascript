@@ -12,8 +12,8 @@ const apiUrl = process.argv[2];
 // Character ID for "Wedge Antilles"
 const characterId = 18;
 
-// Make a GET request to the API to fetch character data
-request(apiUrl + `people/${characterId}/`, (error, response, body) => {
+// Make a GET request to the API to fetch films data
+request(apiUrl, (error, response, body) => {
   if (error) {
     console.error('Error:', error);
     process.exit(1);
@@ -25,17 +25,18 @@ request(apiUrl + `people/${characterId}/`, (error, response, body) => {
   }
 
   try {
-    // Parse the JSON response for character data
-    const characterData = JSON.parse(body);
+    // Parse the JSON response
+    const filmsData = JSON.parse(body);
 
-    // Check if the character appears in any films
-    if (characterData.films && characterData.films.length > 0) {
-      console.log(characterData.films.length);
-    } else {
-      console.log('0');
-    }
+    // Filter films where "Wedge Antilles" is present
+    const filmsWithWedge = filmsData.results.filter((film) =>
+      film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)
+    );
+
+    // Print the number of films with "Wedge Antilles"
+    console.log(filmsWithWedge.length);
   } catch (parseError) {
-    console.error('Error: Unable to parse character data.');
+    console.error('Error: Unable to parse response.');
     process.exit(1);
   }
 });
