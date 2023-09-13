@@ -1,36 +1,18 @@
-
-I apologize for the previous confusion. It seems there might be an issue with the API or the way it handles character data. Let's modify the script to use a different approach that directly counts the appearances of "Wedge Antilles" in films.
-
-Here's the corrected script:
-
-javascript
-Copy code
 const request = require('request');
 
-// Check if the API URL is provided as a command-line argument
-if (process.argv.length !== 3) {
-  console.error('Usage: node starwars_count.js <api_url>');
+// Check if the API URL argument is provided
+if (process.argv.length < 3) {
+  console.error('Please provide the API URL as an argument.');
   process.exit(1);
 }
 
-// Get the API URL from the command-line arguments
-const apiUrl = process.argv[2];
-
-// Character ID for "Wedge Antilles"
+// Define the character ID for Wedge Antilles
 const characterId = 18;
 
-// Function to count appearances of "Wedge Antilles" in films
-function countAppearances(films, characterUrl) {
-  let count = 0;
-  for (const film of films) {
-    if (film.characters.includes(characterUrl)) {
-      count++;
-    }
-  }
-  return count;
-}
+// Get the API URL from the command line arguments
+const apiUrl = process.argv[2];
 
-// Make a GET request to the API to fetch films data
+// Make a request to the Star Wars API
 request(apiUrl, (error, response, body) => {
   if (error) {
     console.error('Error:', error);
@@ -38,21 +20,18 @@ request(apiUrl, (error, response, body) => {
   }
 
   if (response.statusCode !== 200) {
-    console.error(`Error: Status Code ${response.statusCode}`);
+    console.error('API request failed with status code:', response.statusCode);
     process.exit(1);
   }
 
-  try {
-    // Parse the JSON response
-    const filmsData = JSON.parse(body);
+  // Parse the JSON response
+  const data = JSON.parse(body);
 
-    // Count the appearances of "Wedge Antilles" in films
-    const appearances = countAppearances(filmsData.results, `https://swapi-api.alx-tools.com/api/people/${characterId}/`);
+  // Filter movies where Wedge Antilles is present
+  const moviesWithWedgeAntilles = data.results.filter((movie) => {
+    return movie.characters.includes(characterId);
+  });
 
-    // Print the number of appearances
-    console.log(appearances);
-  } catch (parseError) {
-    console.error('Error: Unable to parse response.');
-    process.exit(1);
-  }
+  // Print the number of movies
+  console.log(moviesWithWedgeAntilles.length);
 });
