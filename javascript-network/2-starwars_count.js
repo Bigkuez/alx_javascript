@@ -27,10 +27,20 @@ function makeRequest(url) {
 
 async function countMoviesWithWedgeAntilles(apiUrl, characterId) {
   try {
-    const characterData = await makeRequest(`https://swapi-api.alx-tools.com/api/people/${characterId}/`);
-    const films = characterData.films;
+    const filmsResponse = await makeRequest(apiUrl);
+    const films = filmsResponse.results;
 
-    console.log(films.length);
+    let count = 0;
+
+    for (const film of films) {
+      const filmData = await makeRequest(film.url);
+
+      if (filmData.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
+        count++;
+      }
+    }
+
+    console.log(count);
   } catch (err) {
     console.error('Error:', err);
     process.exit(1);
