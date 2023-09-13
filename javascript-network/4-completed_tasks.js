@@ -37,7 +37,7 @@ request(apiUrl, (error, response, body) => {
       }
     });
 
-    // Print the result in the specified format
+    // Print the result in the format you specified
     console.log(JSON.stringify(completedTasksByUser, null, 2));
   } catch (parseError) {
     console.error('Error parsing JSON:', parseError);
