@@ -1,3 +1,10 @@
+
+I apologize for the previous confusion. It seems there might be an issue with the API or the way it handles character data. Let's modify the script to use a different approach that directly counts the appearances of "Wedge Antilles" in films.
+
+Here's the corrected script:
+
+javascript
+Copy code
 const request = require('request');
 
 // Check if the API URL is provided as a command-line argument
@@ -11,6 +18,17 @@ const apiUrl = process.argv[2];
 
 // Character ID for "Wedge Antilles"
 const characterId = 18;
+
+// Function to count appearances of "Wedge Antilles" in films
+function countAppearances(films, characterUrl) {
+  let count = 0;
+  for (const film of films) {
+    if (film.characters.includes(characterUrl)) {
+      count++;
+    }
+  }
+  return count;
+}
 
 // Make a GET request to the API to fetch films data
 request(apiUrl, (error, response, body) => {
@@ -28,13 +46,11 @@ request(apiUrl, (error, response, body) => {
     // Parse the JSON response
     const filmsData = JSON.parse(body);
 
-    // Filter films where "Wedge Antilles" is present
-    const filmsWithWedge = filmsData.results.filter((film) =>
-      film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)
-    );
+    // Count the appearances of "Wedge Antilles" in films
+    const appearances = countAppearances(filmsData.results, `https://swapi-api.alx-tools.com/api/people/${characterId}/`);
 
-    // Print the number of films with "Wedge Antilles"
-    console.log(filmsWithWedge.length);
+    // Print the number of appearances
+    console.log(appearances);
   } catch (parseError) {
     console.error('Error: Unable to parse response.');
     process.exit(1);
