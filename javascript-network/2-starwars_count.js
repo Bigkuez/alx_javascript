@@ -12,8 +12,8 @@ const characterId = 18;
 // Get the API URL from the command line arguments
 const apiUrl = process.argv[2];
 
-// Function to fetch character data
-function fetchCharacterData(url) {
+// Function to make a request to the API
+function makeRequest(url) {
   return new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) {
@@ -25,20 +25,17 @@ function fetchCharacterData(url) {
   });
 }
 
-// Function to count movies where Wedge Antilles is present
 async function countMoviesWithWedgeAntilles(apiUrl, characterId) {
   try {
-    const filmsResponse = await fetchCharacterData(apiUrl);
+    const filmsResponse = await makeRequest(apiUrl);
     const films = filmsResponse.results;
 
     let count = 0;
 
     for (const film of films) {
-      const charactersInFilm = await Promise.all(
-        film.characters.map((characterUrl) => fetchCharacterData(characterUrl))
-      );
+      const charactersInFilm = await makeRequest(film.url);
 
-      if (charactersInFilm.some((character) => character.id === characterId)) {
+      if (charactersInFilm.characters.includes(characterId.toString())) {
         count++;
       }
     }
