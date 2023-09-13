@@ -37,8 +37,19 @@ request(apiUrl, (error, response, body) => {
       }
     });
 
+    // Filter out users with no completed tasks
+    const filteredResult = Object.entries(completedTasksByUser).reduce(
+      (acc, [userId, completedTasks]) => {
+        if (completedTasks > 0) {
+          acc[userId] = completedTasks;
+        }
+        return acc;
+      },
+      {}
+    );
+
     // Print the result
-    console.log(JSON.stringify(completedTasksByUser, null, 2));
+    console.log(JSON.stringify(filteredResult, null, 2));
   } catch (parseError) {
     console.error('Error parsing JSON:', parseError);
     process.exit(1);
