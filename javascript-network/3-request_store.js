@@ -26,5 +26,5 @@ request(url, (error, response, body) => {
   // Save the response body to the specified file with UTF-8 encoding
   fs.writeFileSync(filePath, body, 'utf-8');
 
-  console.log(`Successfully saved the contents of ${url} to ${filePath}`);
+  
 });
