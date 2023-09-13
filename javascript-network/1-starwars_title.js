@@ -2,10 +2,10 @@ const request = require('request');
 
 // Mapping of episode numbers to movie IDs
 const episodeToMovieId = {
-  1: 1,
+  1: 4,
   2: 5,
   3: 6,
-  4: 4,
+  4: 1,
   5: 2,
   6: 3,
   7: 7,
