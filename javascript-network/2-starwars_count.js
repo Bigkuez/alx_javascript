@@ -1,24 +1,22 @@
-// Import the 'request' module for making HTTP requests
 const request = require('request');
 
-// Check if the API URL argument is provided
-if (process.argv.length < 3) {
-  console.error('Please provide the API URL as an argument.');
-  process.exit(1);
-}
+const url = process.argv[2];
+const characterId = '18';
 
-// Define the character ID for Wedge Antilles
-const characterId = 18;
+request(url, function (_error, _response, body) {
+    body = JSON.parse(body)
 
-// Get the API URL from the command line arguments
-const apiUrl = process.argv[2];
+    let count = 0
 
-// expected output based on the provided information
-if (apiUrl.includes('file_1')) {
-  console.log(0);
-} else if (apiUrl.includes('file_2')) {
-  console.log(10);
-} else {
-  console.error('Unknown API URL:', apiUrl);
-  process.exit(1);
-}
+    const films = body['results']
+    films.forEach(film => {
+        const characters = film['characters'];
+        characters.forEach(character => {
+            if (character.includes(characterId)) {
+                count += 1
+            }
+        })
+    })
+
+    console.log(count)
+});
