@@ -1,56 +1,15 @@
+
 const request = require('request');
 
 const movieId = process.argv[2];
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
 
-if (!movieId) {
-  console.error('Please provide a Movie ID as the first argument.');
-  process.exit(1);
-}
+request(url, function (_error, _response, body) {
+    const charactersUrl = JSON.parse(body)['characters'];
 
-const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
-
-const requestOptions = {
-  timeout: 60000, // Increase the timeout to 60 seconds
-};
-
-request(apiUrl, requestOptions, (error, response, body) => {
-  if (error || response.statusCode !== 200) {
-    console.error('Error fetching movie data.');
-    process.exit(1);
-  }
-
-  const movie = JSON.parse(body);
-
-  if (!movie.characters || movie.characters.length === 0) {
-    console.error('No characters found for this movie.');
-    process.exit(1);
-  }
-
-  const characterUrls = movie.characters;
-
-  function fetchCharacterName(characterUrl) {
-    return new Promise((resolve, reject) => {
-      request(characterUrl, requestOptions, (error, response, body) => {
-        if (error || response.statusCode !== 200) {
-          reject(`Error fetching character data for URL: ${characterUrl}`);
-        } else {
-          const character = JSON.parse(body);
-          resolve(character.name);
-        }
-      });
-    });
-  }
-
-  const characterPromises = characterUrls.map(fetchCharacterName);
-
-  Promise.all(characterPromises)
-    .then((characterNames) => {
-      characterNames.forEach((name) => {
-        console.log(name);
-      });
+    charactersUrl.forEach(characterUrl => {
+        request(characterUrl, function (_error, _response, body) {
+            console.log(JSON.parse(body)['name']);
+        })
     })
-    .catch((error) => {
-      console.error(error);
-      process.exit(1);
-    });
-});
+})
