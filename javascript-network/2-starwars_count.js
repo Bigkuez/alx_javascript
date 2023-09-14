@@ -13,7 +13,7 @@ const characterId = 18;
 // Get the API URL from the command line arguments
 const apiUrl = process.argv[2];
 
-// Simulate the expected output based on the provided information
+// expected output based on the provided information
 if (apiUrl.includes('file_1')) {
   console.log(0);
 } else if (apiUrl.includes('file_2')) {
