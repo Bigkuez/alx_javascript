@@ -1,0 +1,32 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to set cookies
+    function setCookies() {
+        const firstnameValue = document.getElementById('firstname').value;
+        const emailValue = document.getElementById('email').value;
+
+        // Set cookies with expiration date (1 day)
+        document.cookie = `firstname=${firstnameValue}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+        document.cookie = `email=${emailValue}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+
+        alert('Cookies set successfully!');
+    }
+
+    // Function to show cookies
+    function showCookies() {
+        const cookies = document.cookie.split('; ');
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = 'Cookies: ';
+
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split('=');
+            paragraph.innerHTML += `${name}=${value}; `;
+        }
+
+        document.getElementById('cookie-result').innerHTML = '';
+        document.getElementById('cookie-result').appendChild(paragraph);
+    }
+
+    // Add event listeners to buttons
+    document.getElementById('log-button').addEventListener('click', setCookies);
+    document.getElementById('show-button').addEventListener('click', showCookies);
+});
