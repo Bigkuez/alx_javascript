@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Cookie Login System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Example:
+        .my-class {
+            property: value;
+        }
+        */
+    </style>
 </head>
 <body>
-  <div id="loginForm">
-    <h2>Login Form</h2>
-    <div>
-      <label for="firstname">First Name:</label>
-      <input type="text" id="firstname" />
+    <div class="container">
+        <h2>Login Form</h2>
+        <div id="welcomeMessage"></div>
+        <div id="loginForm">
+            <form id="myForm">
+                <input type="text" id="firstname" placeholder="First Name" required>
+                <input type="text" id="email" placeholder="Email" required>
+                <button type="button" id="loginButton">Log me in</button>
+                <button type="button" id="showCookiesButton">Show the cookies</button>
+            </form>
+        </div>
     </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" />
-    </div>
-    <div>
-      <button id="log">Log me in</button>
-      <button id="btn-show-cook">Show the cookies</button>
-    </div>
-  </div>
-
-  <h1 id="welcomeMessage" style="display: none;"></h1>
-
-  <script src="3-index.js"></script>
+    <script src="3-index.js"></script>
 </body>
 </html>
