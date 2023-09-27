@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cookies with 10-day Expiration</title>
+  <title>Get and Display Cookies</title>
 </head>
 <body>
   <div>
@@ -13,46 +13,10 @@
     <input type="email" id="email" />
   </div>
   <div>
-    <button id="log" onclick="setCookies()">Log me in</button>
-    <button id="btn-show-cook" onclick="showCookies()">Show the cookies</button>
+    <button id="log">Log me in</button>
+    <button id="btn-show-cook">Show the cookies</button>
   </div>
 
-  <script>
-    function setCookies() {
-      const firstnameValue = document.getElementById("firstname").value;
-      const emailValue = document.getElementById("email").value;
-
-      // Calculate the expiration date 10 days from now
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 10);
-
-      // Set cookies with 10-day expiration
-      document.cookie = `firstname=${firstnameValue}; expires=${expirationDate.toUTCString()}; path=/`;
-      document.cookie = `email=${emailValue}; expires=${expirationDate.toUTCString()}; path=/`;
-
-      alert("Cookies set successfully!");
-    }
-
-    function getCookie(name) {
-      const cookies = document.cookie.split("; ");
-      for (const cookie of cookies) {
-        const [cookieName, cookieValue] = cookie.split("=");
-        if (cookieName === name) {
-          return cookieValue;
-        }
-      }
-      return "";
-    }
-
-    function showCookies() {
-      const email = getCookie("email");
-      const firstname = getCookie("firstname");
-
-      const paragraph = document.createElement("p");
-      paragraph.innerHTML = `Email: ${email} - Firstname: ${firstname}`;
-
-      document.body.appendChild(paragraph);
-    }
-  </script>
+  <script src="2-index.js"></script>
 </body>
 </html>
