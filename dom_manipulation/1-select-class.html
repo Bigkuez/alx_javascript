@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Selecting Elements</title>
+  <style>
+    .highlight {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <p class="highlight">This is a highlighted paragraph.</p>
+  <p>This is a normal paragraph.</p>
+
+  <script>
+    // Select the element with class "highlight"
+    var highlightedElement = document.querySelector(".highlight");
+
+    // Modify the format of the selected element
+    if (highlightedElement) {
+      highlightedElement.style.fontWeight = "bold";
+    }
+  </script>
+</body>
+</html>
